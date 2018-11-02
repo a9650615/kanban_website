@@ -1,5 +1,5 @@
 export default {
   fonts: {
-    main: `"Roboto", "Helvetica", "Arial", sans-serif;`,
+    main: `"Noto Sans TC","Roboto", "Helvetica", "Arial", sans-serif;`,
   },
 };

@@ -1,3 +1,6 @@
+import React from "react";
+import { Grommet } from "grommet";
+import grommet from "grommet/themes";
 import styled from "styled-components";
 
 const Page = styled("div")`
@@ -8,9 +11,16 @@ const Page = styled("div")`
   font-family: ${props => props.theme.fonts.main};
 `;
 
+const Wrapper = props => (
+  <Grommet theme={grommet}>
+    <Page {...props} />
+  </Grommet>
+);
+
 Page.Body = styled("div")`
   margin: 0 auto;
   max-width: 50em;
 `;
 
-export default Page;
+export default Wrapper;
+export { Page };

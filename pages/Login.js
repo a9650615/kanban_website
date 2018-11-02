@@ -1,6 +1,5 @@
 import React from "react";
 import Head from "next/head";
-import { Button } from "grommet";
 
 import { withSSR } from "./_ssr";
 

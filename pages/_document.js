@@ -9,7 +9,7 @@ import { injectGlobal, ServerStyleSheet } from "styled-components";
 // eslint-disable-next-line no-unused-expressions
 injectGlobal`
   @import 'https://fonts.googleapis.com/css?family=Roboto:300,400,500';
-
+  @import 'https://fonts.googleapis.com/earlyaccess/notosanstc.css';
   body {
     background-color: white;
     margin: 0;
@@ -29,7 +29,7 @@ export default class MyDocument extends Document {
 
   render() {
     return (
-      <html lang="en">
+      <html lang="zh">
         <Head>
           <meta charSet="utf-8" />
           <title>Koa + Next.js</title>
