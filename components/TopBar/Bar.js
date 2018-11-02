@@ -14,7 +14,7 @@ const Bar = styled.div`
 
 Bar.KanbanIcon = styled(KanbansSvg)`
   width: 24px;
-  height: auto;
+  height: 24px;
   margin-right: 10px;
   & > path {
     fill: rgba(70, 131, 248, 1);
@@ -36,7 +36,16 @@ Bar.VerticalLine = styled.div`
   border-left: 1px solid #ccc;
 `;
 
-Bar.AddTaskBtn = styled.button`
+Bar.Button = styled.a`
+  cursor: pointer;
+  background: none;
+  border: none;
+  display: block;
+  display: flex;
+  flex-flow: column row;
+`;
+
+Bar.AddTaskBtn = styled.div`
   background: rgba(70, 131, 248, 1);
   border: none;
   width: 23px;

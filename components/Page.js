@@ -8,6 +8,7 @@ const Page = styled("div")`
   height: 100%;
   line-height: 1.5;
   font-family: ${props => props.theme.fonts.main};
+  min-width: 500px;
 `;
 
 const Wrapper = props => (
