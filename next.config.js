@@ -2,3 +2,7 @@
 module.exports = {
   distDir: "build",
 };
+
+const withImages = require("next-images");
+
+module.exports = withImages();

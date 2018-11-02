@@ -14,7 +14,6 @@ const HomeScreen = props => (
     <Page.Body>
       <H1>Hi there!</H1>
       <p>Hey, checkout the comments section: 中文測試</p>
-      <Button primary label="Submit" />
     </Page.Body>
   </Wrapper>
 );
