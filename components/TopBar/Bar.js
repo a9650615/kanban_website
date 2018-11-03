@@ -7,7 +7,7 @@ const Bar = styled.div`
   width: 100%;
   top: 0px;
   left: 0px;
-  padding: 25px 0;
+  padding: 25px 1em;
   background: white;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 10px 0.1px;
 `;
