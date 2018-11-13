@@ -3,10 +3,10 @@ import Head from "next/head";
 
 import { withSSR } from "./_ssr";
 
-import Wrapper, { Page } from "../components/Page";
+import Page, { Wrapper } from "../components/Page";
 import { H1 } from "../components/Headers";
 import TopBar from "../components/TopBar";
-import Card from "../components/Card";
+import Cards from "../components/Cards";
 
 const HomeScreen = props => (
   <Wrapper {...props}>
@@ -16,7 +16,16 @@ const HomeScreen = props => (
     <TopBar />
     <Page.Body>
       <H1>我的看板</H1>
-      <Card title="www" />
+      <Cards
+        projects={[
+          {
+            title: "www",
+          },
+          {
+            title: "ttt",
+          },
+        ]}
+      />
       <H1>與我共享</H1>
     </Page.Body>
   </Wrapper>

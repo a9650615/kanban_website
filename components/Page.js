@@ -19,7 +19,7 @@ const Wrapper = props => (
 
 Page.Body = styled("div")`
   margin: 0 auto;
-  padding: 4em 1em;
+  padding: 1em 1em;
   max-width: 50em;
 `;
 
@@ -29,5 +29,10 @@ Page.Container = styled.div`
   margin-right: auto;
 `;
 
-export default Wrapper;
-export { Page };
+Page.VerticalCenter = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export default Page;
+export { Wrapper };

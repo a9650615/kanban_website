@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Heading } from "grommet";
-import { CardWrapper } from "./Card";
+import { CardWrapper, CardContainer } from "./Card";
 
 const Card = ({ title }) => (
   <CardWrapper>
@@ -16,12 +16,12 @@ Card.propTypes = {
 };
 
 const Cards = ({ projects = [] }) => (
-  <div>
+  <CardContainer>
     {projects.map((project, i) => (
       // eslint-disable-next-line react/no-array-index-key
       <Card key={`${i}-${project.title}`} title={project.title} />
     ))}
-  </div>
+  </CardContainer>
 );
 
 Cards.propTypes = {

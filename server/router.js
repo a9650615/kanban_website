@@ -12,6 +12,13 @@ module.exports = async function createRouter() {
     });
   });
 
+  router.get("/login", async ctx => {
+    // You can `await` or `return` the ctx.render function call
+    await ctx.render({
+      screen: "Login",
+    });
+  });
+
   // router.get("/comments", async ctx => {
   //   const comments = ctx.session.comments || [];
   //   return ctx.render({

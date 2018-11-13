@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import KanbansSvg from "../../static/Kanbans";
 import PlusSvg from "../../static/PlusSolid";
+import UserSvg from "../../static/UserRegular";
 
 const Bar = styled.div`
   position: relative;
@@ -29,22 +30,20 @@ Bar.PlusIcon = styled(PlusSvg)`
   }
 `;
 
+Bar.UserIcon = styled(UserSvg)`
+  max-width: 16px;
+  height: 16px;
+  & > path {
+    fill: rgba(70, 131, 248, 1);
+  }
+`;
+
 Bar.VerticalLine = styled.div`
   width: 0px;
   height: 10px;
   border: none;
   border-left: 1px solid #ccc;
 `;
-
-Bar.Button = styled.a`
-  cursor: pointer;
-  background: none;
-  border: none;
-  display: block;
-  display: flex;
-  flex-flow: column row;
-`;
-
 Bar.AddTaskBtn = styled.div`
   background: rgba(70, 131, 248, 1);
   border: none;
@@ -61,8 +60,17 @@ Bar.AddTaskBtn = styled.div`
   cursor: pointer;
   outline: none;
   transition: box-shadow 0.3s ease-in-out;
-  &:hover{
-    box-shadow: rgba(70, 131, 248, 0.5) 0px 2px 7px 0.1px;
+`;
+
+Bar.Button = styled.a`
+  cursor: pointer;
+  background: none;
+  border: none;
+  display: block;
+  display: flex;
+  flex-flow: column row;
+  &:hover ${Bar.AddTaskBtn} {
+    box-shadow: rgba(70, 131, 248, 0.6) 0px 2px 10px 0.1px;
   }
 `;
 
