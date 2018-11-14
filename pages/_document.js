@@ -15,6 +15,14 @@ injectGlobal`
     margin: 0;
     padding: 0;
   }
+
+  a {
+    text-decoration: none;
+  }
+
+  a:visited * {
+    color: #2F2F2F;
+  }
 `;
 
 export default class MyDocument extends Document {

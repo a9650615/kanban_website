@@ -8,7 +8,6 @@ const Bar = styled.div`
   width: 100%;
   top: 0px;
   left: 0px;
-  padding: 25px 1em;
   background: white;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 10px 0.1px;
 `;
@@ -16,6 +15,7 @@ const Bar = styled.div`
 Bar.KanbanIcon = styled(KanbansSvg)`
   width: 24px;
   height: 24px;
+  margin-left: 10px;
   margin-right: 10px;
   & > path {
     fill: rgba(70, 131, 248, 1);
@@ -33,6 +33,7 @@ Bar.PlusIcon = styled(PlusSvg)`
 Bar.UserIcon = styled(UserSvg)`
   max-width: 16px;
   height: 16px;
+  margin-right: 16px;
   & > path {
     fill: rgba(70, 131, 248, 1);
   }
@@ -44,6 +45,7 @@ Bar.VerticalLine = styled.div`
   border: none;
   border-left: 1px solid #ccc;
 `;
+
 Bar.AddTaskBtn = styled.div`
   background: rgba(70, 131, 248, 1);
   border: none;
@@ -69,6 +71,10 @@ Bar.Button = styled.a`
   display: block;
   display: flex;
   flex-flow: column row;
+  padding: 25px 0;
+  &:hover {
+    background-color: rgba(221, 221, 221, 0.4);
+  }
   &:hover ${Bar.AddTaskBtn} {
     box-shadow: rgba(70, 131, 248, 0.6) 0px 2px 10px 0.1px;
   }

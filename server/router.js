@@ -5,7 +5,7 @@ module.exports = async function createRouter() {
   const router = new Router();
 
   // View endpoints
-  router.get("/", async ctx => {
+  router.get("/home", async ctx => {
     // You can `await` or `return` the ctx.render function call
     await ctx.render({
       screen: "Home",

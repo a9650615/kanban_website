@@ -25,9 +25,7 @@ const Cards = ({ projects = [] }) => (
 );
 
 Cards.propTypes = {
-  projects: PropTypes.arrayOf({
-    title: PropTypes.string,
-  }).isRequired,
+  projects: PropTypes.arrayOf(PropTypes.shape({ title: PropTypes.string })).isRequired,
 };
 
 export default Cards;
