@@ -5,11 +5,22 @@ module.exports = async function createRouter() {
   const router = new Router();
 
   // View endpoints
-  router.get("/home", async ctx => {
+  router.get("/", async ctx => {
     // You can `await` or `return` the ctx.render function call
     await ctx.render({
-      screen: "Home",
+      screen: "index",
     });
+  });
+
+  router.get("/home", async ctx => {
+    if (ctx.cookies.get("userId") === undefined) {
+      ctx.redirect("/");
+    } else {
+      // You can `await` or `return` the ctx.render function call
+      await ctx.render({
+        screen: "Home",
+      });
+    }
   });
 
   router.get("/login", async ctx => {

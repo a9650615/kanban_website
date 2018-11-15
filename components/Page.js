@@ -6,9 +6,11 @@ import styled from "styled-components";
 const Page = styled("div")`
   width: 100%;
   height: 100%;
+  min-height: calc(100vh);
   line-height: 1.5;
   font-family: ${props => props.theme.fonts.main};
   min-width: 500px;
+  background: ${props => props.background || "inhert"};
 `;
 
 const Wrapper = props => (
@@ -21,6 +23,7 @@ Page.Body = styled("div")`
   margin: 0 auto;
   padding: 1em 1em;
   max-width: 50em;
+  background: ${props => props.background || "inhert"};
 `;
 
 Page.Container = styled.div`

@@ -27,30 +27,49 @@ const TopBar = props => (
     <Page.Container>
       <Box direction="row" align="center" justify="between">
         <Box direction="row" align="center" justify="start">
-          <Link href="/Home" noNeedA>
-            <Bar.Button>
-              <Bar.KanbanIcon />
-              <Text style={{ marginRight: 19 }}>所有看板</Text>
-            </Bar.Button>
-          </Link>
-          <Bar.VerticalLine />
-          <Bar.Button>
-            <Bar.AddTaskBtn>
-              <Bar.PlusIcon />
-            </Bar.AddTaskBtn>
-            <Text style={{ marginRight: 19, color: "rgba(48, 80, 141, 1)" }}>
-              添加卡片
-            </Text>
-          </Bar.Button>
+          {props.isLogin && (
+            <div>
+              <Link href="/Home" noNeedA>
+                <Bar.Button>
+                  <Bar.KanbanIcon />
+                  <Text style={{ marginRight: 19 }}>所有看板</Text>
+                </Bar.Button>
+              </Link>
+              <Bar.VerticalLine />
+              <Bar.Button>
+                <Bar.AddTaskBtn>
+                  <Bar.PlusIcon />
+                </Bar.AddTaskBtn>
+                <Text
+                  style={{ marginRight: 19, color: "rgba(48, 80, 141, 1)" }}
+                >
+                  添加卡片
+                </Text>
+              </Bar.Button>
+            </div>
+          )}
         </Box>
         <div>1</div>
-        <Link href="/Login">
-          <UserInfo userName="111" />
-        </Link>
+        {props.isLogin && <UserInfo userName="111" />}
+        {!props.isLogin && (
+          <Link href="/Login" noNeedA>
+            <Bar.Button>
+              <Text>請先登入</Text>
+            </Bar.Button>
+          </Link>
+        )}
       </Box>
     </Page.Container>
   </Bar>
 );
+
+TopBar.propTypes = {
+  isLogin: PropTypes.bool,
+};
+
+TopBar.defaultProps = {
+  isLogin: false,
+};
 
 export { Bar };
 export default TopBar;
