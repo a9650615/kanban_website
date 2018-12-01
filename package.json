@@ -33,6 +33,7 @@
     "prop-types": "^15.6.1",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
+    "react-trello": "^2.0.5",
     "styled-components": "^3.3.0"
   },
   "devDependencies": {

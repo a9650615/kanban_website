@@ -38,6 +38,17 @@ module.exports = async function createRouter() {
     });
   });
 
+  router.get("/Board", async ctx => {
+    if (ctx.cookies.get("userId") === undefined) {
+      ctx.redirect("/");
+    } else {
+      // You can `await` or `return` the ctx.render function call
+      await ctx.render({
+        screen: "Board",
+      });
+    }
+  });
+
   // router.get("/comments", async ctx => {
   //   const comments = ctx.session.comments || [];
   //   return ctx.render({
