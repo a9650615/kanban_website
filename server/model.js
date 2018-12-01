@@ -1,8 +1,7 @@
 const { User } = require("./mysql");
 
-class Model {
-  // eslint-disable-next-line class-methods-use-this
-  async createUser({ acc, ps, name }) {
+const Model = {
+  createUser: async ({ acc, ps, name }) => {
     const user = { acc, ps, name };
     const hasOne = await User.where({ acc }).count();
     if (hasOne > 0) {
@@ -10,8 +9,18 @@ class Model {
     }
 
     const data = await User.forge(user).save();
-    return { acc: data.get("acc"), id: data.get("id") };
-  }
-}
+    return { name: data.get("name"), id: data.get("id") };
+  },
 
-module.exports = new Model();
+  getUser: async ({ acc, ps }) => {
+    const user = { acc, ps };
+    try {
+      const userData = await User.where(user).fetch();
+      return { id: userData.get("ID"), name: userData.get("name") };
+    } catch (e) {
+      return { error: "沒有此帳號" };
+    }
+  },
+};
+
+module.exports = Model;

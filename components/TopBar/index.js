@@ -28,7 +28,7 @@ const TopBar = props => (
       <Box direction="row" align="center" justify="between">
         <Box direction="row" align="center" justify="start">
           {props.isLogin && (
-            <div>
+            <>
               <Link href="/Home" noNeedA>
                 <Bar.Button>
                   <Bar.KanbanIcon />
@@ -46,7 +46,7 @@ const TopBar = props => (
                   添加卡片
                 </Text>
               </Bar.Button>
-            </div>
+            </>
           )}
         </Box>
         <div>1</div>

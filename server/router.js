@@ -50,7 +50,11 @@ module.exports = async function createRouter() {
   router.post("/api/user", async ctx => {
     const postData = ctx.request.body;
     const returnData = await Model.createUser(postData);
-    // ctx.session.comments = ctx.session.comments || [];
+    ctx.body = returnData;
+  });
+  router.post("/api/user/login", async ctx => {
+    const postData = ctx.request.body;
+    const returnData = await Model.getUser(postData);
     ctx.body = returnData;
   });
   // router.get("/api/comments", async ctx => {

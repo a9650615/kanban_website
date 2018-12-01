@@ -1,5 +1,6 @@
 import React from "react";
 import { Heading, Text } from "grommet";
+import Router from "next/router";
 
 import { withSSR } from "./_ssr";
 import TopBar from "../components/TopBar";
@@ -7,6 +8,12 @@ import Page, { Wrapper } from "../components/Page";
 
 // eslint-disable-next-line react/prefer-stateless-function
 class IndexPage extends React.Component {
+  componentDidMount() {
+    if (window.localStorage.getItem("userId")) {
+      Router.replace("/Home");
+    }
+  }
+
   render() {
     return (
       <Wrapper {...this.props} background="rgb(214, 229, 255)">
