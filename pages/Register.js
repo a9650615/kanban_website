@@ -9,27 +9,27 @@ import Page, { Wrapper } from "../components/Page";
 import TopBar from "../components/TopBar";
 import { H1 } from "../components/Headers";
 
-const Login = props => (
+const Register = props => (
   <Wrapper {...props}>
     <Head>
-      <title>登入</title>
+      <title>註冊</title>
     </Head>
     <TopBar />
     <Page.Body>
-      <H1>歡迎，請先登入</H1>
-      <p>請在此登入您的帳號以開始您的看板管理</p>
+      <H1>您好，請開始註冊</H1>
+      <p>請在此註冊您的帳號以開始使用所有功能</p>
       <FormField label="帳號" htmlFor="account">
         <TextInput id="account" />
       </FormField>
       <FormField label="密碼" htmlFor="password">
         <TextInput id="password" />
       </FormField>
-      <Button label="登入" />
-      <Link href="/Register">
-        <Anchor label="沒有帳號，先註冊" />
-      </Link>
+      <FormField label="名稱" htmlFor="name">
+        <TextInput id="name" />
+      </FormField>
+      <Button label="註冊" />
     </Page.Body>
   </Wrapper>
 );
 
-export default withSSR()(Login);
+export default withSSR()(Register);

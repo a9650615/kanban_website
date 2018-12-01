@@ -1,4 +1,5 @@
 const Router = require("koa-router");
+const Model = require("./model");
 // const Boom = require("boom");
 
 module.exports = async function createRouter() {
@@ -30,6 +31,13 @@ module.exports = async function createRouter() {
     });
   });
 
+  router.get("/Register", async ctx => {
+    // You can `await` or `return` the ctx.render function call
+    await ctx.render({
+      screen: "Register",
+    });
+  });
+
   // router.get("/comments", async ctx => {
   //   const comments = ctx.session.comments || [];
   //   return ctx.render({
@@ -38,7 +46,13 @@ module.exports = async function createRouter() {
   //   });
   // });
 
-  // // API endpoints
+  // API endpoints
+  router.post("/api/user", async ctx => {
+    const postData = ctx.request.body;
+    const returnData = await Model.createUser(postData);
+    // ctx.session.comments = ctx.session.comments || [];
+    ctx.body = returnData;
+  });
   // router.get("/api/comments", async ctx => {
   //   ctx.session.comments = ctx.session.comments || [];
   //   ctx.body = ctx.session.comments;
