@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Heading } from "grommet";
+import Link from "../Link";
 import { CardWrapper, CardContainer } from "./Card";
 
 const Card = ({ title }) => (
@@ -19,13 +20,16 @@ const Cards = ({ projects = [] }) => (
   <CardContainer>
     {projects.map((project, i) => (
       // eslint-disable-next-line react/no-array-index-key
-      <Card key={`${i}-${project.title}`} title={project.title} />
+      <Link key={`${i}-${project.title}`} href="/Board">
+        <Card title={project.title} />
+      </Link>
     ))}
   </CardContainer>
 );
 
 Cards.propTypes = {
-  projects: PropTypes.arrayOf(PropTypes.shape({ title: PropTypes.string })).isRequired,
+  projects: PropTypes.arrayOf(PropTypes.shape({ title: PropTypes.string }))
+    .isRequired,
 };
 
 export default Cards;

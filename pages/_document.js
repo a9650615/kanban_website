@@ -23,16 +23,6 @@ injectGlobal`
   a:visited * {
     color: #2F2F2F;
   }
-
-  /* .smooth-dnd-container.horizontal > .smooth-dnd-draggable-wrapper {
-    background: #fff;
-    min-height: 555px;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 6px;
-    border-radius: 10px;
-    margin-right: 50px;
-    padding: 20px;
-    min-width: 340px;
-  } */
 `;
 
 export default class MyDocument extends Document {
@@ -52,6 +42,10 @@ export default class MyDocument extends Document {
           <meta charSet="utf-8" />
           <title>Koa + Next.js</title>
           {this.props.styleTags}
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+          />
         </Head>
         <Main />
         <NextScript />

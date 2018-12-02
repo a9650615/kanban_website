@@ -159,7 +159,7 @@ class HomeScreen extends React.Component {
         <Head>
           <title>專案看板</title>
         </Head>
-        <TopBar isLogin={this.state.isLogin} />
+        <TopBar isLogin={this.state.isLogin} page="Board" />
         <div style={{ background: "#F1F2F3" }}>
           <Page.Container>
             <H1>所有看板</H1>

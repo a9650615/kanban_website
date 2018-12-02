@@ -26,7 +26,7 @@ class HomeScreen extends React.Component {
         <Head>
           <title>所有專案</title>
         </Head>
-        <TopBar isLogin={this.state.isLogin} />
+        <TopBar isLogin={this.state.isLogin} page="Home" />
         <Page.Body>
           <H1>我的看板</H1>
           <Cards
