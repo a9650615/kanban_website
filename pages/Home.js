@@ -1,6 +1,6 @@
 import React from "react";
 import Head from "next/head";
-import PropTypes from "prop-types";
+import { TextInput, FormField } from "grommet";
 
 import { withSSR } from "./_ssr";
 
@@ -8,10 +8,12 @@ import Page, { Wrapper } from "../components/Page";
 import { H1 } from "../components/Headers";
 import TopBar from "../components/TopBar";
 import Cards from "../components/Cards";
+import CreateLayer from "../components/CreateLayer";
 
 class HomeScreen extends React.Component {
   state = {
     isLogin: false,
+    isCreating: false,
   };
 
   componentDidMount = () => {
@@ -20,13 +22,32 @@ class HomeScreen extends React.Component {
     }
   };
 
+  showCreate = () => {
+    this.setState({ isCreating: true });
+  };
+
+  hiddenCreate = () => {
+    this.setState({ isCreating: false });
+  };
+
   render() {
     return (
       <Wrapper {...this.props}>
         <Head>
           <title>所有專案</title>
         </Head>
-        <TopBar isLogin={this.state.isLogin} page="Home" />
+        <TopBar
+          isLogin={this.state.isLogin}
+          page="Home"
+          onCreate={this.showCreate}
+        />
+        <CreateLayer open={this.state.isCreating} close={this.hiddenCreate}>
+          <>
+            <FormField label="看板名稱">
+              <TextInput />
+            </FormField>
+          </>
+        </CreateLayer>
         <Page.Body>
           <H1>我的看板</H1>
           <Cards

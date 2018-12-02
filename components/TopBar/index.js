@@ -26,11 +26,13 @@ class TopBar extends React.Component {
   static propTypes = {
     isLogin: PropTypes.bool,
     page: PropTypes.string,
+    onCreate: PropTypes.func,
   };
 
   static defaultProps = {
     isLogin: false,
     page: "",
+    onCreate: null,
   };
 
   state = {};
@@ -51,7 +53,7 @@ class TopBar extends React.Component {
                     </Bar.Button>
                   </Link>
                   <Bar.VerticalLine />
-                  <Bar.Button>
+                  <Bar.Button onClick={this.props.onCreate}>
                     <Bar.AddTaskBtn>
                       <Bar.PlusIcon />
                     </Bar.AddTaskBtn>
