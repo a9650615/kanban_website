@@ -13,6 +13,9 @@ const knex = require("knex")({
 // eslint-disable-next-line import/no-unresolved
 const bookshelf = require("bookshelf")(knex);
 
+bookshelf.plugin("virtuals");
+bookshelf.plugin("visibility");
+
 const User = bookshelf.Model.extend({
   tableName: "users",
   idAttribute: "ID",
@@ -40,6 +43,15 @@ const BoardsUserRelation = bookshelf.Model.extend({
 const KanBan = bookshelf.Model.extend({
   tableName: "kanban",
   idAttribute: "ID",
+  hidden: ["name", "ID"],
+  virtuals: {
+    id() {
+      return this.get("ID");
+    },
+    title() {
+      return this.get("name");
+    },
+  },
   board_id() {
     return this.belongsTo(Boards);
   },
@@ -51,6 +63,15 @@ const KanBan = bookshelf.Model.extend({
 
 const Cards = bookshelf.Model.extend({
   tableName: "cards",
+  hidden: ["name", "ID"],
+  virtuals: {
+    id() {
+      return this.get("ID");
+    },
+    title() {
+      return this.get("name");
+    },
+  },
   board() {
     return this.belongsTo(KanBan, "kanban_id");
   },

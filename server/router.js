@@ -49,6 +49,9 @@ module.exports = async function createRouter() {
       // You can `await` or `return` the ctx.render function call
       await ctx.render({
         screen: "Board",
+        props: {
+          id: ctx.params.id,
+        },
       });
     }
   });

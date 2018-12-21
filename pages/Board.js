@@ -3,86 +3,61 @@ import Head from "next/head";
 import "react-trello";
 import "styled-components";
 import { TextInput, FormField } from "grommet";
+import PropTypes from "prop-types";
 
 import { withSSR } from "./_ssr";
 
+import Api from "../utils/api-client";
 import Page, { Wrapper } from "../components/Page";
 import { H1 } from "../components/Headers";
 import TopBar from "../components/TopBar";
 import { StyledBoard, LaneHeader, CustomCard } from "../components/TaskCard";
 import CreateLayer from "../components/CreateLayer";
 
-const data = {
-  lanes: [
-    {
-      id: "lane1",
-      title: "預期項目",
-      cards: [
-        {
-          id: "Card1",
-          title: "準備添加項目",
-          status: "一般",
-          body: "準備點什麼",
-          cardColor: "#BD3B36",
-          typeColor: "#81B2D6",
-        },
-      ],
-    },
-    {
-      id: "lane2",
-      title: "進行中",
-      cards: [
-        {
-          id: "Card2",
-          title: "準備添加項目",
-          status: "緊急",
-          body: "準備點什麼",
-          cardColor: "#9FD569",
-          typeColor: "#D6819B",
-        },
-      ],
-    },
-    {
-      id: "lane3",
-      title: "進行中",
-      cards: [
-        {
-          id: "Card3",
-          title: "準備添加項目",
-          status: "緊急",
-          body: "準備點什麼",
-          cardColor: "#9FD569",
-          typeColor: "#D6819B",
-        },
-      ],
-    },
-    {
-      id: "lane4",
-      title: "進行中",
-      cards: [
-        {
-          id: "Card4",
-          title: "準備添加項目",
-          status: "緊急",
-          body: "準備點什麼",
-          cardColor: "#9FD569",
-          typeColor: "#D6819B",
-        },
-      ],
-    },
-  ],
-};
+const status = [
+  { text: "一般", color: "#81B2D6" },
+  { text: "緊急", color: "#D6819B" },
+];
 
 class HomeScreen extends React.Component {
+  static propTypes = {
+    id: PropTypes.string,
+  };
+
+  static defaultProps = {
+    id: "",
+  };
+
   state = {
     isLogin: false,
     isCreating: false,
+    board: [],
   };
 
   componentDidMount = () => {
     if (localStorage.getItem("userId")) {
       this.setState({ isLogin: true });
+      this.getUserData();
     }
+  };
+
+  getUserData = async () => {
+    const api = await Api.get(`/api/kanban/${this.props.id}`);
+    const oldData = api.data.slice();
+    const newData = oldData.map(val => ({
+      ...val,
+      id: val.id.toString(),
+      cards: val.cards.map(card => ({
+        ...card,
+        id: card.id.toString(),
+        status: status[card.type].text,
+        typeColor: status[card.type].color,
+        cardColor: "#9FD569",
+      })),
+    }));
+    this.setState({
+      board: newData,
+    });
   };
 
   showCreate = () => {
@@ -94,6 +69,7 @@ class HomeScreen extends React.Component {
   };
 
   render() {
+    const { board } = this.state;
     return (
       <Wrapper {...this.props}>
         <Head>
@@ -116,7 +92,9 @@ class HomeScreen extends React.Component {
             <H1>所有看板</H1>
           </Page.Container>
           <StyledBoard
-            data={data}
+            data={{
+              lanes: board,
+            }}
             customCardLayout
             draggable
             customLaneHeader={<LaneHeader />}
