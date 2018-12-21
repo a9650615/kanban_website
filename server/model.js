@@ -23,7 +23,7 @@ const Model = {
   },
 
   createBoard: async ({ name, owner }) => {
-    const board = { name, owner, created_at: new Date() };
+    const board = { name, owner };
     const data = await Boards.forge(board).save();
     return {
       id: data.get("id"),
@@ -36,6 +36,21 @@ const Model = {
     const data = await Boards.fetchAll({
       withRelated: ["owner_user"],
     });
+
+    return data;
+  },
+
+  updateBoard: async (id, { name = "" }) => {
+    const data = await Boards.where({
+      id,
+    }).save(
+      {
+        name,
+      },
+      {
+        method: "update",
+      },
+    );
 
     return data;
   },

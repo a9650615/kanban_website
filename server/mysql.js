@@ -23,6 +23,7 @@ const Boards = bookshelf.Model.extend({
   owner_user() {
     return this.belongsTo(User, "owner");
   },
+  hasTimestamps: ["created_at", "updated_at"],
 });
 
 module.exports = {

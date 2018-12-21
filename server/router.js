@@ -72,6 +72,8 @@ module.exports = async function createRouter() {
     const returnData = await Model.getUser(postData);
     ctx.body = returnData;
   });
+
+  // boards
   router.post("/api/board", async ctx => {
     const owner = ctx.cookies.get("userId");
     const postData = { ...ctx.request.body, owner };
@@ -82,26 +84,10 @@ module.exports = async function createRouter() {
     const returnData = await Model.getBoards();
     ctx.body = returnData;
   });
-  // router.get("/api/comments", async ctx => {
-  //   ctx.session.comments = ctx.session.comments || [];
-  //   ctx.body = ctx.session.comments;
-  // });
-
-  // router.post("/api/comments", async ctx => {
-  //   ctx.session.comments = ctx.session.comments || [];
-
-  //   if (!ctx.request.body["comment"]) {
-  //     throw Boom.badData("Empty comments not allowed");
-  //   }
-
-  //   const comment = {
-  //     date: new Date(),
-  //     comment: ctx.request.body["comment"],
-  //   };
-  //   ctx.session.comments.push(comment);
-  //   ctx.status = 201;
-  //   ctx.body = comment;
-  // });
+  router.put("/api/board/:id", async ctx => {
+    const returnData = await Model.updateBoard(ctx.params.id, ctx.request.body);
+    ctx.body = returnData;
+  });
 
   return router;
 };
