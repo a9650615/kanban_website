@@ -13,6 +13,7 @@ import { H1 } from "../components/Headers";
 import TopBar from "../components/TopBar";
 import { StyledBoard, LaneHeader, CustomCard } from "../components/TaskCard";
 import CreateLayer from "../components/CreateLayer";
+import NewCard from '../components/Board/NewCard';
 
 const status = [
   { text: "一般", color: "#81B2D6" },
@@ -60,6 +61,10 @@ class HomeScreen extends React.Component {
     });
   };
 
+  addCard = (data) => {
+    console.log(data)
+  }
+
   showCreate = () => {
     this.setState({ isCreating: true });
   };
@@ -97,7 +102,10 @@ class HomeScreen extends React.Component {
             }}
             customCardLayout
             draggable
+            editable
+            onCardAdd={this.addCard}
             customLaneHeader={<LaneHeader />}
+            newCardTemplate={<NewCard />}
             style={{
               background: "#F1F2F3",
               height: "calc(100vh - 130px)",
