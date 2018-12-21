@@ -1,4 +1,4 @@
-const { User, Boards, BoardsUserRelation } = require("./mysql");
+const { User, Boards, BoardsUserRelation, KanBan, Cards } = require("./mysql");
 
 const Model = {
   createUser: async ({ acc, ps, name }) => {
@@ -65,6 +65,33 @@ const Model = {
         method: "update",
       },
     );
+
+    return data;
+  },
+
+  createKanBan: async (creator, { name = "", boardId = 0 }) => {
+    const data = await new KanBan({
+      name,
+      board_id: boardId,
+      creator,
+    }).save();
+
+    return data;
+  },
+
+  // cards
+  createCard: async (
+    creator,
+    { kanbanId = 0, name = "", content = "", type = 0, color = 0 },
+  ) => {
+    const data = await new Cards({
+      kanban_id: kanbanId,
+      name,
+      content,
+      type,
+      color,
+      creator,
+    }).save();
 
     return data;
   },

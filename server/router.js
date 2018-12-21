@@ -93,5 +93,19 @@ module.exports = async function createRouter() {
     ctx.body = returnData;
   });
 
+  // kanban
+  router.post("/api/kanban/", async ctx => {
+    const creator = ctx.cookies.get("userId");
+    const returnData = await Model.createKanBan(creator, ctx.request.body);
+    ctx.body = returnData;
+  });
+
+  // cards
+  router.post("/api/cards/", async ctx => {
+    const creator = ctx.cookies.get("userId");
+    const returnData = await Model.createCard(creator, ctx.request.body);
+    ctx.body = returnData;
+  });
+
   return router;
 };
