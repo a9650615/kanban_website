@@ -100,6 +100,12 @@ module.exports = async function createRouter() {
     ctx.body = returnData;
   });
 
+  router.get("/api/kanban/:boardId", async ctx => {
+    const boardId = ctx.params.boardId;
+    const returnData = await Model.getKanbans(boardId);
+    ctx.body = returnData;
+  });
+
   // cards
   router.post("/api/cards/", async ctx => {
     const creator = ctx.cookies.get("userId");

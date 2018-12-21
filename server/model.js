@@ -69,12 +69,23 @@ const Model = {
     return data;
   },
 
+  // kanban
   createKanBan: async (creator, { name = "", boardId = 0 }) => {
     const data = await new KanBan({
       name,
       board_id: boardId,
       creator,
     }).save();
+
+    return data;
+  },
+
+  getKanbans: async boardId => {
+    const data = await KanBan.where({
+      board_id: boardId,
+    }).fetchAll({
+      withRelated: ["cards"],
+    });
 
     return data;
   },

@@ -39,17 +39,24 @@ const BoardsUserRelation = bookshelf.Model.extend({
 
 const KanBan = bookshelf.Model.extend({
   tableName: "kanban",
+  idAttribute: "ID",
   board_id() {
     return this.belongsTo(Boards);
+  },
+  cards() {
+    return this.hasMany(Cards, "kanban_id");
   },
   hasTimestamps: ["created_at", "updated_at"],
 });
 
 const Cards = bookshelf.Model.extend({
   tableName: "cards",
-  kanban_id() {
-    return this.belongsTo(KanBan);
+  board() {
+    return this.belongsTo(KanBan, "kanban_id");
   },
+  // kanban_id() {
+  //   return this.belongsTo(KanBan);
+  // },
   hasTimestamps: ["created_at", "updated_at"],
 });
 
