@@ -72,6 +72,16 @@ module.exports = async function createRouter() {
     const returnData = await Model.getUser(postData);
     ctx.body = returnData;
   });
+  router.post("/api/board", async ctx => {
+    const owner = ctx.cookies.get("userId");
+    const postData = { ...ctx.request.body, owner };
+    const returnData = await Model.createBoard(postData);
+    ctx.body = returnData;
+  });
+  router.get("/api/board", async ctx => {
+    const returnData = await Model.getBoards();
+    ctx.body = returnData;
+  });
   // router.get("/api/comments", async ctx => {
   //   ctx.session.comments = ctx.session.comments || [];
   //   ctx.body = ctx.session.comments;

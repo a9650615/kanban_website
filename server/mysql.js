@@ -15,8 +15,17 @@ const bookshelf = require("bookshelf")(knex);
 
 const User = bookshelf.Model.extend({
   tableName: "users",
+  idAttribute: "ID",
+});
+
+const Boards = bookshelf.Model.extend({
+  tableName: "boards",
+  owner_user() {
+    return this.belongsTo(User, "owner");
+  },
 });
 
 module.exports = {
   User,
+  Boards,
 };

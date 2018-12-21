@@ -1,4 +1,4 @@
-const { User } = require("./mysql");
+const { User, Boards } = require("./mysql");
 
 const Model = {
   createUser: async ({ acc, ps, name }) => {
@@ -20,6 +20,24 @@ const Model = {
     } catch (e) {
       return { error: "沒有此帳號" };
     }
+  },
+
+  createBoard: async ({ name, owner }) => {
+    const board = { name, owner, created_at: new Date() };
+    const data = await Boards.forge(board).save();
+    return {
+      id: data.get("id"),
+      name: data.get("name"),
+      owner: data.get("owner"),
+    };
+  },
+
+  getBoards: async () => {
+    const data = await Boards.fetchAll({
+      withRelated: ["owner_user"],
+    });
+
+    return data;
   },
 };
 
