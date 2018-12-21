@@ -42,7 +42,7 @@ module.exports = async function createRouter() {
     });
   });
 
-  router.get("/Board", async ctx => {
+  router.get("/Board/:id", async ctx => {
     if (ctx.cookies.get("userId") === undefined) {
       ctx.redirect("/");
     } else {
@@ -82,6 +82,10 @@ module.exports = async function createRouter() {
   });
   router.get("/api/board", async ctx => {
     const returnData = await Model.getBoards();
+    ctx.body = returnData;
+  });
+  router.get("/api/board/:id", async ctx => {
+    const returnData = await Model.getBoards(ctx.params.id);
     ctx.body = returnData;
   });
   router.put("/api/board/:id", async ctx => {

@@ -26,7 +26,18 @@ const Boards = bookshelf.Model.extend({
   hasTimestamps: ["created_at", "updated_at"],
 });
 
+const BoardsUserRelation = bookshelf.Model.extend({
+  tableName: "board_users",
+  user() {
+    return this.belongsTo(User);
+  },
+  baord() {
+    return this.belongsTo(Boards);
+  },
+});
+
 module.exports = {
   User,
   Boards,
+  BoardsUserRelation,
 };

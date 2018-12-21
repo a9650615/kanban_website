@@ -1,4 +1,4 @@
-const { User, Boards } = require("./mysql");
+const { User, Boards, BoardsUserRelation } = require("./mysql");
 
 const Model = {
   createUser: async ({ acc, ps, name }) => {
@@ -25,17 +25,31 @@ const Model = {
   createBoard: async ({ name, owner }) => {
     const board = { name, owner };
     const data = await Boards.forge(board).save();
+    const relationData = new BoardsUserRelation({
+      board_id: data.get("id"),
+      user_Id: owner,
+    }).save();
     return {
-      id: data.get("id"),
+      ID: data.get("id"),
       name: data.get("name"),
       owner: data.get("owner"),
+      relationData,
     };
   },
 
-  getBoards: async () => {
-    const data = await Boards.fetchAll({
-      withRelated: ["owner_user"],
-    });
+  getBoards: async id => {
+    let data = {};
+    if (id) {
+      data = await Boards.where({
+        owner: id,
+      }).fetchAll({
+        withRelated: ["owner_user"],
+      });
+    } else {
+      data = await Boards.fetchAll({
+        withRelated: ["owner_user"],
+      });
+    }
 
     return data;
   },

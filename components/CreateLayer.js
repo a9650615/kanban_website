@@ -7,6 +7,7 @@ class CreateLayer extends React.Component {
   static propTypes = {
     open: PropTypes.bool,
     close: PropTypes.func,
+    submit: PropTypes.func,
     children: PropTypes.element,
   };
 
@@ -14,11 +15,17 @@ class CreateLayer extends React.Component {
     open: false,
     // eslint-disable-next-line lodash/prefer-noop
     close: () => {},
+    // eslint-disable-next-line lodash/prefer-noop
+    submit: () => {},
     children: <></>,
   };
 
   onClose = () => {
     this.props.close();
+  };
+
+  onSubmit = () => {
+    this.props.submit();
   };
 
   render() {
@@ -53,7 +60,7 @@ class CreateLayer extends React.Component {
                 <Button
                   type="submit"
                   label="Submit"
-                  onClick={this.onClose}
+                  onClick={this.onSubmit}
                   primary
                 />
               </Box>

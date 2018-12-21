@@ -8,6 +8,18 @@ const cookie = {
 
     return value;
   },
+  getCookie: key => {
+    if (window) {
+      const value = `; ${window.document.cookie}`;
+      const parts = value.split(`; ${key} =`);
+      if (parts.length === 2)
+        return parts
+          .pop()
+          .split()
+          .shift();
+    }
+    return null;
+  },
 };
 
 export default cookie;
