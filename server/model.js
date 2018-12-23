@@ -74,6 +74,15 @@ const Model = {
     return data;
   },
 
+  deleteBoard: async id => {
+    const result = await new Boards()
+      .where({
+        ID: id,
+      })
+      .destroy();
+    return result;
+  },
+
   // kanban
   createKanBan: async (creator, { name = "", boardId = 0 }) => {
     const data = await new KanBan({

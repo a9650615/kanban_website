@@ -13,11 +13,14 @@ import TopBar from "../components/TopBar";
 import CreateLayer from "../components/CreateLayer";
 import BoardPage from "../components/Board/BoardPage";
 import MemberPage from "../components/Board/MemberPage";
+import SettingPage from "../components/Board/SettingPage";
 
 const status = [
   { text: "一般", color: "#81B2D6" },
   { text: "緊急", color: "#D6819B" },
 ];
+
+let boardName = null;
 
 class HomeScreen extends React.Component {
   static propTypes = {
@@ -47,7 +50,7 @@ class HomeScreen extends React.Component {
     const oldData = api.data.slice();
     const newData = oldData.map(val => ({
       ...val,
-      id: val.id.toString(),
+      id: val.ID.toString(),
       cards: val.cards.map(card => ({
         ...card,
         id: card.id.toString(),
@@ -79,6 +82,15 @@ class HomeScreen extends React.Component {
     });
   };
 
+  handleAddBoard = async () => {
+    await Api.post("/api/kanban/", {
+      name: boardName,
+      boardId: this.props.id,
+    });
+    this.hiddenCreate();
+    this.getUserData();
+  };
+
   render() {
     const { board, type } = this.state;
     return (
@@ -92,16 +104,25 @@ class HomeScreen extends React.Component {
           onCreate={this.showCreate}
           onChangeType={this.changeType}
         />
-        <CreateLayer open={this.state.isCreating} close={this.hiddenCreate}>
+        <CreateLayer
+          open={this.state.isCreating}
+          submit={this.handleAddBoard}
+          close={this.hiddenCreate}
+        >
           <>
-            <FormField label="卡片名稱">
-              <TextInput />
+            <FormField label="版面名稱">
+              <TextInput
+                onChange={e => {
+                  boardName = e.target.value;
+                }}
+              />
             </FormField>
           </>
         </CreateLayer>
         <div style={{ background: "#F1F2F3" }}>
           {type === 0 && <BoardPage board={board} />}
           {type === 1 && <MemberPage id={this.props.id} />}
+          {type === 2 && <SettingPage id={this.props.id} />}
         </div>
       </Wrapper>
     );

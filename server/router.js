@@ -100,6 +100,10 @@ module.exports = async function createRouter() {
     const returnData = await Model.updateBoard(ctx.params.id, ctx.request.body);
     ctx.body = returnData;
   });
+  router.delete("/api/board/:id", async ctx => {
+    await Model.deleteBoard(ctx.params.id);
+    ctx.body = { result: true };
+  });
   router.get("/api/board/user/:boardId", async ctx => {
     const returnData = await Model.getUserOfBoard(ctx.params.boardId);
     ctx.body = returnData;

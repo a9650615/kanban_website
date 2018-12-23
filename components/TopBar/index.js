@@ -74,7 +74,7 @@ class TopBar extends React.Component {
                       style={{ marginRight: 19, color: "rgba(48, 80, 141, 1)" }}
                     >
                       {page === "Home" && "添加看板"}
-                      {page === "Board" && "添加卡片"}
+                      {page === "Board" && "添加版面"}
                     </Text>
                   </Bar.Button>
                 </>

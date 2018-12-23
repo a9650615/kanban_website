@@ -44,11 +44,11 @@ const BoardsUserRelation = bookshelf.Model.extend({
 const KanBan = bookshelf.Model.extend({
   tableName: "kanban",
   idAttribute: "ID",
-  hidden: ["name", "ID"],
+  hidden: ["name"],
   virtuals: {
-    id() {
-      return this.get("ID");
-    },
+    // id() {
+    //   return this.get("ID");
+    // },
     title() {
       return this.get("name");
     },
