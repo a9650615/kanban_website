@@ -4,6 +4,7 @@ import { Box, Text } from "grommet";
 import Link from "../Link";
 import Page from "../Page";
 import Bar from "./Bar";
+import TypeButton from "./TypeButton";
 
 const UserInfo = ({ userName = "" }) => (
   <Page.VerticalCenter>
@@ -27,18 +28,30 @@ class TopBar extends React.Component {
     isLogin: PropTypes.bool,
     page: PropTypes.string,
     onCreate: PropTypes.func,
+    onChangeType: PropTypes.func,
   };
 
   static defaultProps = {
     isLogin: false,
     page: "",
     onCreate: null,
+    onChangeType: () => {},
   };
 
-  state = {};
+  state = {
+    selectedPage: 0,
+  };
+
+  changeSelectPage = page => {
+    this.setState({
+      selectedPage: page,
+    });
+    this.props.onChangeType(page);
+  };
 
   render() {
     const { isLogin, page } = this.props;
+    const { selectedPage } = this.state;
     return (
       <Bar {...this.props}>
         <Page.Container>
@@ -67,7 +80,26 @@ class TopBar extends React.Component {
                 </>
               )}
             </Box>
-            <div>1</div>
+            <div>
+              <TypeButton
+                text="看板"
+                page={0}
+                selected={selectedPage === 0}
+                onClick={this.changeSelectPage}
+              />
+              <TypeButton
+                text="成員"
+                page={1}
+                selected={selectedPage === 1}
+                onClick={this.changeSelectPage}
+              />
+              <TypeButton
+                text="設定"
+                page={2}
+                selected={selectedPage === 2}
+                onClick={this.changeSelectPage}
+              />
+            </div>
             {isLogin && <UserInfo userName="111" />}
             {!isLogin && (
               <Link href="/Login" noNeedA>

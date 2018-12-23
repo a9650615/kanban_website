@@ -8,12 +8,11 @@ import PropTypes from "prop-types";
 import { withSSR } from "./_ssr";
 
 import Api from "../utils/api-client";
-import Page, { Wrapper } from "../components/Page";
-import { H1 } from "../components/Headers";
+import { Wrapper } from "../components/Page";
 import TopBar from "../components/TopBar";
-import { StyledBoard, LaneHeader, CustomCard } from "../components/TaskCard";
 import CreateLayer from "../components/CreateLayer";
-import NewCard from '../components/Board/NewCard';
+import BoardPage from "../components/Board/BoardPage";
+import MemberPage from "../components/Board/MemberPage";
 
 const status = [
   { text: "一般", color: "#81B2D6" },
@@ -33,6 +32,7 @@ class HomeScreen extends React.Component {
     isLogin: false,
     isCreating: false,
     board: [],
+    type: 0,
   };
 
   componentDidMount = () => {
@@ -61,9 +61,9 @@ class HomeScreen extends React.Component {
     });
   };
 
-  addCard = (data) => {
-    console.log(data)
-  }
+  addCard = data => {
+    console.log(data);
+  };
 
   showCreate = () => {
     this.setState({ isCreating: true });
@@ -73,10 +73,16 @@ class HomeScreen extends React.Component {
     this.setState({ isCreating: false });
   };
 
+  changeType = type => {
+    this.setState({
+      type,
+    });
+  };
+
   render() {
-    const { board } = this.state;
+    const { board, type } = this.state;
     return (
-      <Wrapper {...this.props}>
+      <Wrapper {...this.props} style={{ background: "#F1F2F3" }}>
         <Head>
           <title>專案看板</title>
         </Head>
@@ -84,6 +90,7 @@ class HomeScreen extends React.Component {
           isLogin={this.state.isLogin}
           page="Board"
           onCreate={this.showCreate}
+          onChangeType={this.changeType}
         />
         <CreateLayer open={this.state.isCreating} close={this.hiddenCreate}>
           <>
@@ -93,28 +100,8 @@ class HomeScreen extends React.Component {
           </>
         </CreateLayer>
         <div style={{ background: "#F1F2F3" }}>
-          <Page.Container>
-            <H1>所有看板</H1>
-          </Page.Container>
-          <StyledBoard
-            data={{
-              lanes: board,
-            }}
-            customCardLayout
-            draggable
-            editable
-            onCardAdd={this.addCard}
-            customLaneHeader={<LaneHeader />}
-            newCardTemplate={<NewCard />}
-            style={{
-              background: "#F1F2F3",
-              height: "calc(100vh - 130px)",
-              overflowY: "auto",
-            }}
-            // className="boardContainer"
-          >
-            <CustomCard />
-          </StyledBoard>
+          {type === 0 && <BoardPage board={board} />}
+          {type === 1 && <MemberPage />}
         </div>
       </Wrapper>
     );
