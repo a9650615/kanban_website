@@ -35,6 +35,7 @@ Page.Container = styled.div`
 Page.FullContainer = styled(Page.Container)`
   min-height: calc(90vh - 100px);
   padding: 30px;
+  align-items: center;
 `;
 
 Page.VerticalCenter = styled.div`
