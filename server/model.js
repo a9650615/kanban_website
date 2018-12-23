@@ -22,6 +22,11 @@ const Model = {
     }
   },
 
+  getUsers: async () => {
+    const data = await User.fetchAll();
+    return data;
+  },
+
   createBoard: async ({ name, owner }) => {
     const board = { name, owner };
     const data = await Boards.forge(board).save();
@@ -105,6 +110,46 @@ const Model = {
     }).save();
 
     return data;
+  },
+
+  // user of board
+
+  async getUserOfBoard(boardId) {
+    const data = await BoardsUserRelation.where({
+      board_id: boardId,
+    }).fetchAll({
+      withRelated: ["user"],
+    });
+
+    return data;
+  },
+
+  async addUserOfBoard(boardId, userId) {
+    const existingModel = await BoardsUserRelation.forge({
+      board_id: boardId,
+      user_Id: userId,
+    }).fetch();
+    let data;
+    if (existingModel) {
+      data = await existingModel.fetch();
+      return data;
+      // return await existingModel.set(updateData).save();
+    }
+    data = await new BoardsUserRelation({
+      board_id: boardId,
+      user_Id: userId,
+    }).save();
+    return data;
+  },
+
+  async removeUserOfBoard(boardId, userId) {
+    const result = await new BoardsUserRelation()
+      .where({
+        board_id: boardId,
+        user_Id: userId,
+      })
+      .destroy();
+    return result;
   },
 };
 

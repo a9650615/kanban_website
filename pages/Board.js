@@ -101,7 +101,7 @@ class HomeScreen extends React.Component {
         </CreateLayer>
         <div style={{ background: "#F1F2F3" }}>
           {type === 0 && <BoardPage board={board} />}
-          {type === 1 && <MemberPage />}
+          {type === 1 && <MemberPage id={this.props.id} />}
         </div>
       </Wrapper>
     );

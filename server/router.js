@@ -65,6 +65,11 @@ module.exports = async function createRouter() {
   // });
 
   // API endpoints
+  router.get("/api/user", async ctx => {
+    const returnData = await Model.getUsers();
+    ctx.body = returnData;
+  });
+
   router.post("/api/user", async ctx => {
     const postData = ctx.request.body;
     const returnData = await Model.createUser(postData);
@@ -94,6 +99,21 @@ module.exports = async function createRouter() {
   router.put("/api/board/:id", async ctx => {
     const returnData = await Model.updateBoard(ctx.params.id, ctx.request.body);
     ctx.body = returnData;
+  });
+  router.get("/api/board/user/:boardId", async ctx => {
+    const returnData = await Model.getUserOfBoard(ctx.params.boardId);
+    ctx.body = returnData;
+  });
+  router.post("/api/board/user/:boardId", async ctx => {
+    const returnData = await Model.addUserOfBoard(
+      ctx.params.boardId,
+      ctx.request.body.userId,
+    );
+    ctx.body = returnData;
+  });
+  router.delete("/api/board/user/:boardId/:userId", async ctx => {
+    await Model.removeUserOfBoard(ctx.params.boardId, ctx.params.userId);
+    ctx.body = { result: true };
   });
 
   // kanban

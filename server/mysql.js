@@ -19,6 +19,7 @@ bookshelf.plugin("visibility");
 const User = bookshelf.Model.extend({
   tableName: "users",
   idAttribute: "ID",
+  hidden: ["ps"],
 });
 
 const Boards = bookshelf.Model.extend({
@@ -33,7 +34,7 @@ const Boards = bookshelf.Model.extend({
 const BoardsUserRelation = bookshelf.Model.extend({
   tableName: "board_users",
   user() {
-    return this.belongsTo(User);
+    return this.belongsTo(User, "user_id");
   },
   baord() {
     return this.belongsTo(Boards);
