@@ -32,6 +32,7 @@
     "next-images": "^1.0.1",
     "prop-types": "^15.6.1",
     "react": "^16.4.0",
+    "react-color": "^2.17.0",
     "react-dom": "^16.4.0",
     "react-select": "^2.1.2",
     "react-trello": "^2.0.5",

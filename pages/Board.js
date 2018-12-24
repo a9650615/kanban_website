@@ -17,8 +17,6 @@ import SettingPage from "../components/Board/SettingPage";
 
 import colors from "../static/KanbanColors";
 
-const status = colors.status;
-
 let boardName = null;
 
 class HomeScreen extends React.Component {
@@ -53,18 +51,14 @@ class HomeScreen extends React.Component {
       cards: val.cards.map(card => ({
         ...card,
         id: card.ID.toString(),
-        status: status[card.type].text,
-        typeColor: status[card.type].color,
-        cardColor: "#9FD569",
+        status: colors.status[card.type].text,
+        typeColor: colors.status[card.type].color,
+        cardColor: colors.colors[card.color],
       })),
     }));
     this.setState({
       board: newData,
     });
-  };
-
-  addCard = data => {
-    console.log(data);
   };
 
   showCreate = () => {
