@@ -23,6 +23,10 @@ injectGlobal`
   a:visited * {
     color: #2F2F2F;
   }
+
+  .rc-dropdown-hidden {
+    display: none;
+  }
 `;
 
 export default class MyDocument extends Document {

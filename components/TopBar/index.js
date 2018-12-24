@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Box, Text } from "grommet";
+import DropDown from "rc-dropdown";
 import Link from "../Link";
 import Page from "../Page";
 import Bar from "./Bar";
@@ -40,6 +41,13 @@ class TopBar extends React.Component {
 
   state = {
     selectedPage: 0,
+    userInfo: false,
+  };
+
+  onVisibleChange = open => {
+    this.setState({
+      userInfo: open,
+    });
   };
 
   changeSelectPage = page => {
@@ -51,7 +59,7 @@ class TopBar extends React.Component {
 
   render() {
     const { isLogin, page } = this.props;
-    const { selectedPage } = this.state;
+    const { selectedPage, userInfo } = this.state;
     return (
       <Bar {...this.props}>
         <Page.Container>
@@ -81,26 +89,62 @@ class TopBar extends React.Component {
               )}
             </Box>
             <div>
-              <TypeButton
-                text="看板"
-                page={0}
-                selected={selectedPage === 0}
-                onClick={this.changeSelectPage}
-              />
-              <TypeButton
-                text="成員"
-                page={1}
-                selected={selectedPage === 1}
-                onClick={this.changeSelectPage}
-              />
-              <TypeButton
-                text="設定"
-                page={2}
-                selected={selectedPage === 2}
-                onClick={this.changeSelectPage}
-              />
+              {page === "Board" && (
+                <>
+                  <TypeButton
+                    text="看板"
+                    page={0}
+                    selected={selectedPage === 0}
+                    onClick={this.changeSelectPage}
+                  />
+                  <TypeButton
+                    text="成員"
+                    page={1}
+                    selected={selectedPage === 1}
+                    onClick={this.changeSelectPage}
+                  />
+                  <TypeButton
+                    text="設定"
+                    page={2}
+                    selected={selectedPage === 2}
+                    onClick={this.changeSelectPage}
+                  />
+                </>
+              )}
             </div>
-            {isLogin && <UserInfo userName="111" />}
+            {isLogin && (
+              <div style={{ position: "relative" }}>
+                <DropDown
+                  trigger={["click"]}
+                  overlay={
+                    <div
+                      style={{
+                        position: "absolute",
+                        right: 20,
+                        background: "#fff",
+                        padding: 10,
+                        width: 100,
+                        boxShadow: "0px 3px 3px .1px rgba(0,0,0,0.2)",
+                      }}
+                    >
+                      <Link href="/logout">登出</Link>
+                    </div>
+                  }
+                  onVisibleChange={this.onVisibleChange}
+                  visible={userInfo}
+                >
+                  <button
+                    style={{
+                      border: "none",
+                      background: "none",
+                      outline: "none",
+                    }}
+                  >
+                    <UserInfo userName={localStorage.getItem("userName")} />
+                  </button>
+                </DropDown>
+              </div>
+            )}
             {!isLogin && (
               <Link href="/Login" noNeedA>
                 <Bar.Button>

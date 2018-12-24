@@ -35,6 +35,15 @@ module.exports = async function createRouter() {
     });
   });
 
+  router.get("/logout", async ctx => {
+    ctx.cookies.set("userId", null);
+    ctx.cookies.set("userName", null);
+    // You can `await` or `return` the ctx.render function call
+    await ctx.render({
+      screen: "Logout",
+    });
+  });
+
   router.get("/Register", async ctx => {
     // You can `await` or `return` the ctx.render function call
     await ctx.render({
@@ -94,6 +103,10 @@ module.exports = async function createRouter() {
   });
   router.get("/api/board/:id", async ctx => {
     const returnData = await Model.getBoards(ctx.params.id);
+    ctx.body = returnData;
+  });
+  router.get("/api/board/id/:id", async ctx => {
+    const returnData = await Model.getBoard(ctx.params.id);
     ctx.body = returnData;
   });
   router.put("/api/board/:id", async ctx => {

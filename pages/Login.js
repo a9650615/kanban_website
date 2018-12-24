@@ -56,7 +56,7 @@ class Login extends React.Component {
             <TextInput id="acc" onChange={this.onChange} />
           </FormField>
           <FormField label="密碼" htmlFor="ps">
-            <TextInput id="ps" onChange={this.onChange} />
+            <TextInput id="ps" type="password" onChange={this.onChange} />
           </FormField>
           <p style={{ color: "red" }}>{this.state.error}</p>
           <Button label="登入" onClick={this.sendData} />

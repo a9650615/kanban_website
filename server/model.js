@@ -59,6 +59,15 @@ const Model = {
     return data;
   },
 
+  async getBoard(id) {
+    const data = await Boards.where({
+      ID: id,
+    }).fetch({
+      withRelated: ["owner_user"],
+    });
+    return data;
+  },
+
   updateBoard: async (id, { name = "" }) => {
     const data = await Boards.where({
       id,

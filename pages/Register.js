@@ -23,9 +23,9 @@ class Register extends React.Component {
 
   sendData = () => {
     User.register(this.state)
-      .then(({data}) => {
-        localStorage.setItem("userId", data.id);
-        Router.push("/");
+      .then(({ data }) => {
+        // localStorage.setItem("userId", data.id);
+        Router.push("/Login");
         return data;
       })
       // eslint-disable-next-line lodash/prefer-noop
@@ -50,7 +50,12 @@ class Register extends React.Component {
             />
           </FormField>
           <FormField label="密碼" htmlFor="ps">
-            <TextInput id="ps" onChange={this.onChange} value={this.state.ps} />
+            <TextInput
+              id="ps"
+              type="password"
+              onChange={this.onChange}
+              value={this.state.ps}
+            />
           </FormField>
           <FormField label="名稱" htmlFor="name">
             <TextInput
