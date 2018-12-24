@@ -3,8 +3,9 @@ const knex = require("knex")({
   client: "mysql",
   connection: {
     host: "127.0.0.1",
+    port: "3307",
     user: "root",
-    password: "root",
+    password: "1234",
     database: "task_managent",
     charset: "utf8",
   },
