@@ -64,11 +64,11 @@ const KanBan = bookshelf.Model.extend({
 
 const Cards = bookshelf.Model.extend({
   tableName: "cards",
-  hidden: ["name", "ID"],
+  hidden: ["name"],
   virtuals: {
-    id() {
-      return this.get("ID");
-    },
+    // id() {
+    //   return this.get("ID");
+    // },
     title() {
       return this.get("name");
     },

@@ -140,5 +140,10 @@ module.exports = async function createRouter() {
     ctx.body = returnData;
   });
 
+  router.put("/api/cards/:id/kanban", async ctx => {
+    const returnData = await Model.moveCard(ctx.params.id, ctx.request.body.to);
+    ctx.body = returnData;
+  });
+
   return router;
 };

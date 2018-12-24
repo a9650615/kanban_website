@@ -15,10 +15,9 @@ import BoardPage from "../components/Board/BoardPage";
 import MemberPage from "../components/Board/MemberPage";
 import SettingPage from "../components/Board/SettingPage";
 
-const status = [
-  { text: "一般", color: "#81B2D6" },
-  { text: "緊急", color: "#D6819B" },
-];
+import colors from "../static/KanbanColors";
+
+const status = colors.status;
 
 let boardName = null;
 
@@ -53,7 +52,7 @@ class HomeScreen extends React.Component {
       id: val.ID.toString(),
       cards: val.cards.map(card => ({
         ...card,
-        id: card.id.toString(),
+        id: card.ID.toString(),
         status: status[card.type].text,
         typeColor: status[card.type].color,
         cardColor: "#9FD569",
@@ -91,6 +90,12 @@ class HomeScreen extends React.Component {
     this.getUserData();
   };
 
+  handleBoardChange = async (cardId, sourceLaneId, targetLaneId, position, cardDetails) => {
+    await Api.put(`/api/cards/${cardId}/kanban`, {
+      to: targetLaneId,
+    });
+  };
+
   render() {
     const { board, type } = this.state;
     return (
@@ -120,7 +125,9 @@ class HomeScreen extends React.Component {
           </>
         </CreateLayer>
         <div style={{ background: "#F1F2F3" }}>
-          {type === 0 && <BoardPage board={board} />}
+          {type === 0 && (
+            <BoardPage board={board} onDataChange={this.handleBoardChange} />
+          )}
           {type === 1 && <MemberPage id={this.props.id} />}
           {type === 2 && <SettingPage id={this.props.id} />}
         </div>

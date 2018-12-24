@@ -121,6 +121,21 @@ const Model = {
     return data;
   },
 
+  async moveCard(cardId, toBoardId) {
+    const data = await Cards.where({
+      ID: cardId,
+    }).save(
+      {
+        kanban_id: toBoardId,
+      },
+      {
+        method: "update",
+      },
+    );
+
+    return data;
+  },
+
   // user of board
 
   async getUserOfBoard(boardId) {
