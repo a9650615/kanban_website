@@ -17,6 +17,7 @@ const BoardPage = ({
   board = [],
   onDataChange = () => {},
   laneChange = () => {},
+  onCardClick = () => {},
 }) => (
   <>
     <Page.Container>
@@ -36,6 +37,7 @@ const BoardPage = ({
       addCardLink={<AddCard>添加卡片</AddCard>}
       handleDragEnd={onDataChange}
       handleLaneDragEnd={laneChange}
+      onCardClick={onCardClick}
       style={{
         background: "#F1F2F3",
         height: "calc(100vh - 130px)",

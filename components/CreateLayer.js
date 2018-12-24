@@ -1,3 +1,4 @@
+/* eslint-disable lodash/prefer-noop */
 import React from "react";
 import { Box, Layer, Button, Heading } from "grommet";
 import { Close } from "grommet-icons";
@@ -8,15 +9,17 @@ class CreateLayer extends React.Component {
     open: PropTypes.bool,
     close: PropTypes.func,
     submit: PropTypes.func,
+    finish: PropTypes.func,
+    delete: PropTypes.func,
     children: PropTypes.element,
   };
 
   static defaultProps = {
     open: false,
-    // eslint-disable-next-line lodash/prefer-noop
     close: () => {},
-    // eslint-disable-next-line lodash/prefer-noop
     submit: () => {},
+    finish: () => {},
+    delete: () => {},
     children: <></>,
   };
 
@@ -49,7 +52,7 @@ class CreateLayer extends React.Component {
             >
               <Box flex={false} direction="row" justify="between">
                 <Heading level={2} margin="none">
-                  添加
+                  {this.props.title || "添加"}
                 </Heading>
                 <Button icon={<Close />} onClick={this.onClose} />
               </Box>
@@ -57,12 +60,34 @@ class CreateLayer extends React.Component {
                 {this.props.children}
               </Box>
               <Box flex={false} as="footer" align="start">
-                <Button
-                  type="submit"
-                  label="Submit"
-                  onClick={this.onSubmit}
-                  primary
-                />
+                <Box direction="row">
+                  {this.props.editId && (
+                    <>
+                      <Button
+                        primary
+                        type="button"
+                        label="完成"
+                        color="blue-1"
+                        onClick={() => this.props.finish(this.props.editId)}
+                      />
+                      <Button
+                        primary
+                        type="button"
+                        label="刪除"
+                        style={{ background: "red" }}
+                        onClick={() => this.props.delete(this.props.editId)}
+                      />
+                    </>
+                  )}
+                  {!this.props.editId && (
+                    <Button
+                      type="submit"
+                      label="送出"
+                      onClick={this.onSubmit}
+                      primary
+                    />
+                  )}
+                </Box>
               </Box>
             </Box>
           </Layer>

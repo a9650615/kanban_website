@@ -52,14 +52,16 @@ export default class NewCard extends Component {
   };
 
   onSubmit = async () => {
-    await Api.post("/api/cards", {
+    const data = await Api.post("/api/cards", {
       kanbanId: this.props.laneId,
       name: cardData.title,
       content: cardData.content,
       type: cardData.type,
       color: cardData.color,
     });
+    console.log(data.data);
     this.props.onAdd({
+      ...data.data,
       ...cardData,
       cardColor: colors.colors[cardData.color],
       typeColor: colors.status[cardData.type].color,

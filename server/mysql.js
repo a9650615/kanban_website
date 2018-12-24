@@ -36,8 +36,8 @@ const BoardsUserRelation = bookshelf.Model.extend({
   user() {
     return this.belongsTo(User, "user_id");
   },
-  baord() {
-    return this.belongsTo(Boards);
+  board() {
+    return this.belongsTo(Boards, "board_id");
   },
 });
 

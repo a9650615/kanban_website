@@ -18,6 +18,7 @@ class HomeScreen extends React.Component {
     isLogin: false,
     isCreating: false,
     boards: [],
+    sharedBoard: [],
   };
 
   componentDidMount = () => {
@@ -29,9 +30,21 @@ class HomeScreen extends React.Component {
 
   getMyBoardList = async () => {
     const userId = localStorage.getItem("userId");
-    const { data } = await Api.get(`/api/board/${userId}`);
+    const { data } = await Api.get(`/api/user/${userId}/board`);
+    const myBoard = [];
+    const sharedBoard = [];
+    data.forEach(({ board }) => {
+      if (board.owner.toString() === userId) {
+        myBoard.push(board);
+      } else {
+        sharedBoard.push(board);
+      }
+    });
+    // console.log(myBoard, sharedBoard);
+    // const userBoard = data.filter(boards => boards.board.owner !== userId);
     this.setState({
-      boards: data,
+      boards: myBoard,
+      sharedBoard,
     });
   };
 
@@ -61,7 +74,7 @@ class HomeScreen extends React.Component {
   };
 
   render() {
-    const { boards } = this.state;
+    const { boards, sharedBoard } = this.state;
     return (
       <Wrapper {...this.props}>
         <Head>
@@ -83,6 +96,7 @@ class HomeScreen extends React.Component {
           <H1>我的看板</H1>
           <Cards projects={boards} />
           <H1>與我共享</H1>
+          <Cards projects={sharedBoard} />
         </Page.Body>
       </Wrapper>
     );

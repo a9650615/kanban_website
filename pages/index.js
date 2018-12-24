@@ -24,6 +24,17 @@ class IndexPage extends React.Component {
               方便高效的管理你的專案看板
             </Heading>
             <Text>利用視覺化的方式管理你的看板</Text>
+            <div style={{ textAlign: "center" }}>
+              <img
+                src="https://i.imgur.com/gkKzeSH.png"
+                style={{
+                  maxWidth: "80%",
+                  margin: "auto",
+                  boxShadow: "0px 3px 3px .1px rgba(0,0,0,0,3)",
+                }}
+                alt=""
+              />
+            </div>
           </Page.Body>
         </div>
       </Wrapper>

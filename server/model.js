@@ -27,15 +27,31 @@ const Model = {
     return data;
   },
 
+  async getUserSharedBoards(userId) {
+    const data = await BoardsUserRelation.where({
+      user_Id: userId,
+    }).fetchAll({
+      withRelated: ["user", "board"],
+    });
+    return data;
+    // .filter(async data => {
+    //   const list = await data.fetch();
+
+    //   console.log(list.board.get("owner"));
+    //   // board.get("owner") !== userId
+    //   return true;
+    // });
+  },
+
   createBoard: async ({ name, owner }) => {
     const board = { name, owner };
     const data = await Boards.forge(board).save();
-    const relationData = new BoardsUserRelation({
-      board_id: data.get("id"),
+    const relationData = await new BoardsUserRelation({
+      board_id: data.get("ID"),
       user_Id: owner,
     }).save();
     return {
-      ID: data.get("id"),
+      ID: data.get("ID"),
       name: data.get("name"),
       owner: data.get("owner"),
       relationData,
@@ -133,6 +149,41 @@ const Model = {
   },
 
   // cards
+  async getCard(cardId) {
+    const data = await Cards.where({
+      ID: cardId,
+    }).fetch();
+    return data;
+  },
+
+  async deleteCard(cardId) {
+    const data = await Cards.where({
+      ID: cardId,
+    }).save(
+      {
+        status: 2,
+      },
+      {
+        method: "update",
+      },
+    );
+    return data;
+  },
+
+  async finishCard(cardId) {
+    const data = await Cards.where({
+      ID: cardId,
+    }).save(
+      {
+        status: 1,
+      },
+      {
+        method: "update",
+      },
+    );
+    return data;
+  },
+
   createCard: async (
     creator,
     { kanbanId = 0, name = "", content = "", type = 0, color = 0 },

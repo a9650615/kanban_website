@@ -78,6 +78,10 @@ module.exports = async function createRouter() {
     const returnData = await Model.getUsers();
     ctx.body = returnData;
   });
+  router.get("/api/user/:id/board", async ctx => {
+    const returnData = await Model.getUserSharedBoards(ctx.params.id);
+    ctx.body = returnData;
+  });
 
   router.post("/api/user", async ctx => {
     const postData = ctx.request.body;
@@ -153,6 +157,21 @@ module.exports = async function createRouter() {
   });
 
   // cards
+  router.get("/api/cards/:id", async ctx => {
+    const returnData = await Model.getCard(ctx.params.id);
+    ctx.body = returnData;
+  });
+
+  router.delete("/api/cards/:id", async ctx => {
+    const returnData = await Model.deleteCard(ctx.params.id);
+    ctx.body = returnData;
+  });
+
+  router.put("/api/cards/:id/finish", async ctx => {
+    const returnData = await Model.finishCard(ctx.params.id);
+    ctx.body = returnData;
+  });
+
   router.post("/api/cards/", async ctx => {
     const creator = ctx.cookies.get("userId");
     const returnData = await Model.createCard(creator, ctx.request.body);

@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 
 import { withSSR } from "./_ssr";
 
+import { H1 } from "../components/Headers";
 import Api from "../utils/api-client";
 import { Wrapper } from "../components/Page";
 import TopBar from "../components/TopBar";
@@ -33,6 +34,8 @@ class HomeScreen extends React.Component {
     isCreating: false,
     board: [],
     type: 0,
+    openDetail: false,
+    detail: {},
   };
 
   componentDidMount = () => {
@@ -48,7 +51,7 @@ class HomeScreen extends React.Component {
     const newData = oldData.map(val => ({
       ...val,
       id: val.ID.toString(),
-      cards: val.cards.map(card => ({
+      cards: val.cards.filter(data => data.status === 0).map(card => ({
         ...card,
         id: card.ID.toString(),
         status: colors.status[card.type].text,
@@ -122,8 +125,35 @@ class HomeScreen extends React.Component {
     // new
   };
 
+  handleCardClick = async (cardId, metadata, laneId) => {
+    // console.log(cardId, metadata, laneId);
+    const card = await Api.get(`/api/cards/${cardId}`);
+    this.setState({
+      openDetail: true,
+      detail: card.data,
+    });
+  };
+
+  hiddenDetail = () => {
+    this.setState({
+      openDetail: false,
+    });
+  };
+
+  handleDeleteCard = async cardId => {
+    await Api.delete(`/api/cards/${cardId}`);
+    this.getUserData();
+    this.hiddenDetail();
+  };
+
+  handleFinishCard = async cardId => {
+    await Api.put(`/api/cards/${cardId}/finish`);
+    this.getUserData();
+    this.hiddenDetail();
+  };
+
   render() {
-    const { board, type } = this.state;
+    const { board, type, detail } = this.state;
     return (
       <Wrapper {...this.props} style={{ background: "#F1F2F3" }}>
         <Head>
@@ -135,6 +165,26 @@ class HomeScreen extends React.Component {
           onCreate={this.showCreate}
           onChangeType={this.changeType}
         />
+        <CreateLayer
+          title={detail.title}
+          open={this.state.openDetail}
+          close={this.hiddenDetail}
+          editId={detail.ID}
+          delete={this.handleDeleteCard}
+          finish={this.handleFinishCard}
+        >
+          <>
+            <div
+              style={{
+                height: 4,
+                marginBottom: 20,
+                background:
+                  detail.type > -1 ? colors.status[detail.type].color : "",
+              }}
+            />
+            <div>{detail.content}</div>
+          </>
+        </CreateLayer>
         <CreateLayer
           open={this.state.isCreating}
           submit={this.handleAddBoard}
@@ -156,6 +206,7 @@ class HomeScreen extends React.Component {
               board={board}
               laneChange={this.handleAllDataChange}
               onDataChange={this.handleBoardChange}
+              onCardClick={this.handleCardClick}
             />
           )}
           {type === 1 && <MemberPage id={this.props.id} />}
