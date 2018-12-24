@@ -90,10 +90,42 @@ class HomeScreen extends React.Component {
     this.getUserData();
   };
 
-  handleBoardChange = async (cardId, sourceLaneId, targetLaneId, position, cardDetails) => {
+  handleBoardChange = async (
+    cardId,
+    sourceLaneId,
+    targetLaneId,
+    position,
+    cardDetails,
+  ) => {
     await Api.put(`/api/cards/${cardId}/kanban`, {
       to: targetLaneId,
     });
+  };
+
+  handleAllDataChange = async (oldPosition, newPosition) => {
+    // console.log(laneId, newPosition);
+
+    const lane = this.state.board.slice();
+    const nowLane = Object.assign({}, lane[oldPosition]);
+    lane.splice(oldPosition, 1);
+    lane.splice(newPosition, 0, nowLane);
+    // const oldIndex = lane.findIndex(arr => arr.id == laneId);
+    this.setState({
+      board: lane,
+    });
+    const updateList = lane.map((data, index) => ({
+      id: data.ID,
+      sort: index,
+    }));
+    const data = {
+      updateData: {
+        id: nowLane.id,
+      },
+      updateList,
+    };
+    await Api.put("/api/kanban/sort", data);
+
+    // new
   };
 
   render() {
@@ -126,7 +158,11 @@ class HomeScreen extends React.Component {
         </CreateLayer>
         <div style={{ background: "#F1F2F3" }}>
           {type === 0 && (
-            <BoardPage board={board} onDataChange={this.handleBoardChange} />
+            <BoardPage
+              board={board}
+              laneChange={this.handleAllDataChange}
+              onDataChange={this.handleBoardChange}
+            />
           )}
           {type === 1 && <MemberPage id={this.props.id} />}
           {type === 2 && <SettingPage id={this.props.id} />}

@@ -13,7 +13,11 @@ const AddCard = styled.a`
   margin: 10px 20px;
 `;
 
-const BoardPage = ({ board = [], onDataChange = () => {} }) => (
+const BoardPage = ({
+  board = [],
+  onDataChange = () => {},
+  laneChange = () => {},
+}) => (
   <>
     <Page.Container>
       <H1>所有看板</H1>
@@ -25,11 +29,13 @@ const BoardPage = ({ board = [], onDataChange = () => {} }) => (
       customCardLayout
       draggable
       editable
+      laneDraggable
       onCardAdd={this.addCard}
       customLaneHeader={<LaneHeader />}
       newCardTemplate={<NewCard />}
       addCardLink={<AddCard>添加卡片</AddCard>}
       handleDragEnd={onDataChange}
+      handleLaneDragEnd={laneChange}
       style={{
         background: "#F1F2F3",
         height: "calc(100vh - 130px)",

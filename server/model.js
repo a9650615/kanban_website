@@ -97,11 +97,30 @@ const Model = {
   getKanbans: async boardId => {
     const data = await KanBan.where({
       board_id: boardId,
-    }).fetchAll({
-      withRelated: ["cards"],
-    });
+    })
+      .orderBy("sort", "asc")
+      .fetchAll({
+        withRelated: ["cards"],
+      });
 
     return data;
+  },
+
+  async resortKanBan(creator, { updateData, updateList }) {
+    // eslint-disable-next-line guard-for-in
+    for (const i in updateList) {
+      // eslint-disable-next-line no-await-in-loop
+      await KanBan.where({
+        ID: updateList[i].id,
+      }).save(
+        {
+          sort: updateList[i].sort,
+        },
+        {
+          method: "update",
+        },
+      );
+    }
   },
 
   // cards
