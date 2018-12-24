@@ -58,8 +58,9 @@ export default class NewCard extends Component {
       content: cardData.content,
       type: cardData.type,
       color: cardData.color,
+      boardId: this.props.id,
     });
-    console.log(data.data);
+    // console.log(data.data);
     this.props.onAdd({
       ...data.data,
       ...cardData,

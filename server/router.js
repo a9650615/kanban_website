@@ -157,18 +157,24 @@ module.exports = async function createRouter() {
   });
 
   // cards
-  router.get("/api/cards/:id", async ctx => {
+  router.get("/api/cards/:id/", async ctx => {
     const returnData = await Model.getCard(ctx.params.id);
     ctx.body = returnData;
   });
 
-  router.delete("/api/cards/:id", async ctx => {
-    const returnData = await Model.deleteCard(ctx.params.id);
+  router.delete("/api/cards/:id/:boardId", async ctx => {
+    const returnData = await Model.deleteCard(
+      ctx.params.id,
+      ctx.params.boardId,
+    );
     ctx.body = returnData;
   });
 
   router.put("/api/cards/:id/finish", async ctx => {
-    const returnData = await Model.finishCard(ctx.params.id);
+    const returnData = await Model.finishCard(
+      ctx.params.id,
+      ctx.request.body.boardId,
+    );
     ctx.body = returnData;
   });
 
@@ -180,6 +186,17 @@ module.exports = async function createRouter() {
 
   router.put("/api/cards/:id/kanban", async ctx => {
     const returnData = await Model.moveCard(ctx.params.id, ctx.request.body.to);
+    ctx.body = returnData;
+  });
+
+  // history
+  router.get("/api/history/board/:boardId", async ctx => {
+    const returnData = await Model.getBoardHistory(ctx.params.boardId);
+    ctx.body = returnData;
+  });
+
+  router.get("/api/history/graph/:boardId", async ctx => {
+    const returnData = await Model.getBoardHistoryGraph(ctx.params.boardId);
     ctx.body = returnData;
   });
 

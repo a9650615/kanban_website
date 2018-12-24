@@ -34,7 +34,7 @@ class HomeScreen extends React.Component {
     const myBoard = [];
     const sharedBoard = [];
     data.forEach(({ board }) => {
-      if (board.owner.toString() === userId) {
+      if ((board.owner || "").toString() === userId) {
         myBoard.push(board);
       } else {
         sharedBoard.push(board);

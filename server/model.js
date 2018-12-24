@@ -1,4 +1,11 @@
-const { User, Boards, BoardsUserRelation, KanBan, Cards } = require("./mysql");
+const {
+  User,
+  Boards,
+  BoardsUserRelation,
+  KanBan,
+  History,
+  Cards,
+} = require("./mysql");
 
 const Model = {
   createUser: async ({ acc, ps, name }) => {
@@ -105,6 +112,11 @@ const Model = {
         ID: id,
       })
       .destroy();
+    await new BoardsUserRelation()
+      .where({
+        board_id: id,
+      })
+      .destroy();
     return result;
   },
 
@@ -170,7 +182,7 @@ const Model = {
     return data;
   },
 
-  async finishCard(cardId) {
+  async finishCard(cardId, boardId) {
     const data = await Cards.where({
       ID: cardId,
     }).save(
@@ -181,12 +193,19 @@ const Model = {
         method: "update",
       },
     );
+    await new History({
+      board_id: boardId,
+      card_id: cardId,
+      type: 1,
+      from_text: "未完成",
+      to_text: "已完成",
+    }).save();
     return data;
   },
 
   createCard: async (
     creator,
-    { kanbanId = 0, name = "", content = "", type = 0, color = 0 },
+    { kanbanId = 0, name = "", content = "", type = 0, color = 0, boardId = 0 },
   ) => {
     const data = await new Cards({
       kanban_id: kanbanId,
@@ -196,7 +215,13 @@ const Model = {
       color,
       creator,
     }).save();
-
+    await new History({
+      board_id: boardId,
+      card_id: data.get("ID"),
+      type: 2,
+      from_text: "新增",
+      to_text: "",
+    }).save();
     return data;
   },
 
@@ -253,6 +278,61 @@ const Model = {
       })
       .destroy();
     return result;
+  },
+
+  // history
+  async getBoardHistory(boardId) {
+    const data = await History.where({
+      board_id: boardId,
+    })
+      .orderBy("created_at", "desc")
+      .fetchAll({
+        pageSize: 15,
+        page: 1,
+        withRelated: ["card"],
+      });
+    return data;
+  },
+
+  async getBoardHistoryGraph(boardId) {
+    const last30 = new Date();
+    last30.setDate(last30.getDate() - 30);
+    const all = await new History()
+      .query(query => {
+        query
+          .select("updated_at")
+          .count("* as count")
+          .whereBetween("updated_at", [last30, new Date()])
+          .groupByRaw("updated_at");
+      })
+      .where({
+        board_id: boardId,
+        // type: 2,
+      })
+      .fetchAll({
+        // columns: ["updated_at"],
+      });
+
+    const finish = await new History()
+      .query(query => {
+        query
+          .select("updated_at")
+          .count("* as count")
+          .whereBetween("updated_at", [last30, new Date()])
+          .groupBy("updated_at");
+      })
+      .where({
+        board_id: boardId,
+        type: 1,
+      })
+      .fetchAll({
+        // columns: ["updated_at"],
+      });
+
+    return {
+      all,
+      finish,
+    };
   },
 };
 

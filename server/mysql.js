@@ -64,6 +64,7 @@ const KanBan = bookshelf.Model.extend({
 
 const Cards = bookshelf.Model.extend({
   tableName: "cards",
+  idAttribute: "ID",
   hidden: ["name"],
   virtuals: {
     // id() {
@@ -82,10 +83,20 @@ const Cards = bookshelf.Model.extend({
   hasTimestamps: ["created_at", "updated_at"],
 });
 
+const History = bookshelf.Model.extend({
+  tableName: "history",
+  card() {
+    return this.belongsTo(Cards, "card_id");
+  },
+  hasTimestamps: ["created_at", "updated_at"],
+});
+
 module.exports = {
   User,
   Boards,
   BoardsUserRelation,
   KanBan,
   Cards,
+  History,
+  knex,
 };

@@ -14,6 +14,7 @@ const AddCard = styled.a`
 `;
 
 const BoardPage = ({
+  id = 0,
   board = [],
   onDataChange = () => {},
   laneChange = () => {},
@@ -33,7 +34,7 @@ const BoardPage = ({
       laneDraggable
       onCardAdd={this.addCard}
       customLaneHeader={<LaneHeader />}
-      newCardTemplate={<NewCard />}
+      newCardTemplate={<NewCard id={id} />}
       addCardLink={<AddCard>添加卡片</AddCard>}
       handleDragEnd={onDataChange}
       handleLaneDragEnd={laneChange}

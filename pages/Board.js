@@ -141,13 +141,15 @@ class HomeScreen extends React.Component {
   };
 
   handleDeleteCard = async cardId => {
-    await Api.delete(`/api/cards/${cardId}`);
+    await Api.delete(`/api/cards/${cardId}/${this.props.id}`);
     this.getUserData();
     this.hiddenDetail();
   };
 
   handleFinishCard = async cardId => {
-    await Api.put(`/api/cards/${cardId}/finish`);
+    await Api.put(`/api/cards/${cardId}/finish`, {
+      boardId: this.props.id,
+    });
     this.getUserData();
     this.hiddenDetail();
   };
@@ -203,6 +205,7 @@ class HomeScreen extends React.Component {
         <div style={{ background: "#F1F2F3" }}>
           {type === 0 && (
             <BoardPage
+              id={this.props.id}
               board={board}
               laneChange={this.handleAllDataChange}
               onDataChange={this.handleBoardChange}
